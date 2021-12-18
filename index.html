@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>새해 타이머</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Orbitron&display=swap");
+      body{
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(skyblue, white);
+      }
+      .clock_container{
+        width: 760px;
+        height: 162px;
+        border: 5px solid black;
+        box-shadow: black 3px 3px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background: white;
+        position: relative;
+        bottom: 200px;
+      }
+      .text{
+        color: gray;
+        font-size: 25px;
+        font-weight: bold;
+      }
+      .clock{
+        font-size: 60px;
+        font-family: "Orbitron", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="clock_container">
+      <span class="text">2022년 임인년까지</span>
+      <span class="clock">00 : 00 : 00 : 00</span>
+    </div>
+  </body>
+  <script>
+    const clock = document.querySelector(".clock");
+    const D_M = 86400000;
+    const H_M = 3600000;
+    const M_M = 60000;
+    const S_M = 1000;
+    const newYear = new Date(2022, 0, 1);
+
+    function getTime(){
+    const now = Date.now()
+    const remain = newYear - now;
+    const R_D = Math.trunc(remain / D_M);
+    const R_H = Math.trunc( (remain % D_M) / H_M );
+    const R_M = Math.trunc( ((remain % D_M) % H_M) /M_M );
+    const R_S = Math.trunc( (((remain % D_M) % H_M) % M_M) / S_M );
+      if( remain > 0) {
+        clock.innerText = `${R_D<10 ? `0${R_D}` : R_D}d : ${R_H<10 ? `0${R_H}` : R_H}h : ${R_M<10 ? `0${R_M}` : R_M}m : ${R_S<10 ? `0${R_S}` : R_S}s`;
+      } else {
+        clearInterval(timer);
+        clock.innerText = "HAPPY 2022!";
+      }
+    }
+    const timer = setInterval( getTime, 1000 );
+    getTime();
+  </script>
+</html>
